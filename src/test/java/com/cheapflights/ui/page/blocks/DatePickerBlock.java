@@ -22,11 +22,11 @@ public class DatePickerBlock extends HtmlElement {
     private WebElement nextArrow;
 
     @Name("Column with month name")
-    @FindBy(xpath = "(//div[@class=\"col col-month col-month-m\"])[2]")
+    @FindBy(xpath = "(//div[contains(@class, \"col col-month col-month\")])[3]")
     private WebElement monthColumn;
 
     @Name("Name of the month")
-    @FindBy(xpath = "(//div[@class=\"col col-month col-month-m\"])[2]//div[@class='monthDisplay']")
+    @FindBy(xpath = "(//div[contains(@class, \"col col-month col-month\")])[3]//div[@class='monthDisplay']")
     private WebElement monthName;
 
     @Name("Table with dates for the chosen month")
