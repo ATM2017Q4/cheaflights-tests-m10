@@ -45,7 +45,6 @@ public class CheapestFlightSearchSteps {
 
     @Given("^I have searched for all airports in (.*)$")
     public void chooseOrigin(String origin) {
-
         homePage.chooseOrigin(origin);
     }
 

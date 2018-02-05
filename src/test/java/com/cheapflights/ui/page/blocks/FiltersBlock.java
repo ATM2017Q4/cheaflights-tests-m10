@@ -12,6 +12,7 @@ import ru.yandex.qatools.htmlelements.annotations.Name;
 import ru.yandex.qatools.htmlelements.element.CheckBox;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -49,16 +50,28 @@ public class FiltersBlock extends HtmlElement {
 
     public void chooseNonStopFlights() {
         logger.info("Waiting for the search results page to load");
-        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        try {
+            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        }catch (org.openqa.selenium.TimeoutException e){
+            logger.log(Level.SEVERE, "The page has not been properly loaded");
+        }
         logger.info("Unchecking one stop checkbox");
         oneStop.click();
-        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        try {
+            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        }catch (org.openqa.selenium.TimeoutException e){
+            logger.log(Level.SEVERE, "The page has not been properly loaded");
+        }finally {
+            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        }
         logger.info("Unchecking two stops checkbox");
         twoStops.click();
         logger.info("Waiting for the page to update according to the chosen filters");
         try {
             new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
-        } catch (org.openqa.selenium.TimeoutException e) {
+        }catch (org.openqa.selenium.TimeoutException e){
+            logger.log(Level.SEVERE, "The page has not been properly loaded");
+        }finally {
             new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
         }
 
@@ -78,7 +91,13 @@ public class FiltersBlock extends HtmlElement {
                 .build()
                 .perform();
         logger.info("Waiting for the page to update according to the chosen duration");
-        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        try {
+            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        }catch (org.openqa.selenium.TimeoutException e){
+            logger.log(Level.SEVERE, "The page has not been properly loaded");
+        }finally {
+            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        }
 
     }
 

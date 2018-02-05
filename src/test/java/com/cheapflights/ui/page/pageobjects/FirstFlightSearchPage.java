@@ -54,7 +54,13 @@ public class FirstFlightSearchPage extends AbstractSearchPage {
     public FirstFlightSearchPage sortByCheapest() {
         logger.info("Sorting the flight by cheapest");
         filtersBlock.sortByCheapest();
-        new AttributeWaitDecorator(new Wait(driver, loadComplete, "class", "resultsListCover tl", 20)).setUpWait();
+        try {
+            new AttributeWaitDecorator(new Wait(driver, loadComplete, "class", "resultsListCover tl", 20)).setUpWait();
+        } catch (org.openqa.selenium.TimeoutException e) {
+            logger.log(Level.SEVERE, "The attribute has not properly updated yet.");
+        } finally {
+            new AttributeWaitDecorator(new Wait(driver, loadComplete, "class", "resultsListCover tl", 20)).setUpWait();
+        }
         return this;
     }
 

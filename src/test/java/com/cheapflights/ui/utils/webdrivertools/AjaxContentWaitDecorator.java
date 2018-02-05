@@ -6,6 +6,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class AjaxContentWaitDecorator extends WaitDecorator{
     public AjaxContentWaitDecorator(Wait wait) {
@@ -15,7 +17,7 @@ public class AjaxContentWaitDecorator extends WaitDecorator{
     @Override
     public void setUpWait() {
         super.setUpWait();
-        this.createWait().until(waitForJSandJQueryToLoad());
+        this.createWait().withTimeout(30, TimeUnit.SECONDS).until(waitForJSandJQueryToLoad());
 
     }
 
