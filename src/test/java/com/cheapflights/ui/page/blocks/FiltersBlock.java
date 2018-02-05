@@ -56,7 +56,11 @@ public class FiltersBlock extends HtmlElement {
         logger.info("Unchecking two stops checkbox");
         twoStops.click();
         logger.info("Waiting for the page to update according to the chosen filters");
-        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        try {
+            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        }catch (org.openqa.selenium.TimeoutException e){
+            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        }
 
     }
 
