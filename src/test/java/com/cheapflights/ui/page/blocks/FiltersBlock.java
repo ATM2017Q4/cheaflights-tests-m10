@@ -58,7 +58,7 @@ public class FiltersBlock extends HtmlElement {
         logger.info("Waiting for the page to update according to the chosen filters");
         try {
             new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
-        }catch (org.openqa.selenium.TimeoutException e){
+        } catch (org.openqa.selenium.TimeoutException e) {
             new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
         }
 
