@@ -50,7 +50,7 @@ public class PrefilledSearchFormBlock extends BaseSearchFormBlock{
     public void searchOrigin(String from) {
         logger.info("Clicking in the origin field and clearing it");
         origin.click();
-        origin.clear();
+        origin.sendKeys(Keys.BACK_SPACE);
         logger.info("Sending " + from + "as origin name");
         origin.sendKeys(from);
         logger.info("Waiting for the dropdown to appear");
