@@ -1,14 +1,13 @@
-package com.cheapflights.ui.feature.feature;
+package com.cheapflights.ui.feature.without_json;
 
 import com.cheapflights.common.driver.AbstractWebDriver;
 import com.cheapflights.common.driver.DriverFactory;
-import com.cheapflights.ui.entities.TravelInfo;
 import com.cheapflights.ui.page.abstractpages.AbstractHomePage;
 import com.cheapflights.ui.page.abstractpages.AbstractSearchPage;
 import com.cheapflights.ui.page.factory.HomePageFactory;
 import com.cheapflights.ui.page.factory.SearchPageFactory;
-import com.google.gson.Gson;
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -18,7 +17,7 @@ import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;
 
-public class CheapestFlightSearchByJsonSteps {
+public class CheapestFlightSearchSteps {
 
 
     private final String url = "https://cheapflights.com/";
@@ -27,8 +26,7 @@ public class CheapestFlightSearchByJsonSteps {
     private AbstractSearchPage searchPage;
     private HomePageFactory pageFactory;
 
-
-    @Given("I want to use Firefox browser")
+    @Before
     public void launchBrowser() {
         AbstractWebDriver instance = DriverFactory.getDriverFromFactory("firefox");
         driver = instance.getDriver();
@@ -37,7 +35,7 @@ public class CheapestFlightSearchByJsonSteps {
         driver.manage().window().maximize();
     }
 
-    @And("I am on the Home Page")
+    @Given("I am on the Home Page")
     public void openUrl() {
         driver.get(url);
         pageFactory = new HomePageFactory(driver);
@@ -45,46 +43,38 @@ public class CheapestFlightSearchByJsonSteps {
 
     }
 
-    @Given("^I have filled in the form on the Home Page with the following values:$")
-    public void chooseOrigin(String json) {
-        TravelInfo travelInfo = new Gson().fromJson(json, TravelInfo.class);
-        homePage.chooseOrigin(travelInfo.getOrigin())
-                .chooseDestination(travelInfo.getDestination())
-                .chooseDates(travelInfo.getDepartureDates().getMonth(), Integer.toString(travelInfo.getDepartureDates().getDay()), Integer.toString(travelInfo.getReturnDates().getDay()))
-                .increaseNumberOfAdults(travelInfo.getNumberOfAdults());
+    @Given("^I want to travel from (\\w+) to (\\w+)$")
+    public void chooseOrigin(String origin, String destination) {
+        homePage.chooseOrigin(origin);
+        homePage.chooseDestination(destination);
     }
-//
-//    @And("^searched for all airports in (.*)$")
-//    public void chooseDestination(String destination) {
-//        homePage.chooseDestination(destination);
-//    }
-//
-//    @And("^searched for (.*), (.*), (.*) in the date picker$")
-//    public void chooseDates(String departureMonth, String departureDay, String returnDay) {
-//        homePage.chooseDates(departureMonth, departureDay, returnDay);
-//    }
-//
-//    @And("set number of adults to (.*)")
-//    public void increaseNuberOfAdults(int numberOfAdults) {
-//        homePage.increaseNumberOfAdults(numberOfAdults);
-//    }
-//
-    @And("submitted the form")
+
+    @And("^chose it to last from (\\w+) (\\d+) till (\\d+) of the same month$")
+    public void chooseDates(String departureMonth, String departureDay, String returnDay) {
+        homePage.chooseDates(departureMonth, departureDay, returnDay);
+    }
+
+    @And("^want to find the ticket for (\\d+) adults$")
+    public void increaseNuberOfAdults(int numberOfAdults) {
+        homePage.increaseNumberOfAdults(numberOfAdults);
+    }
+
+    @And("^submitted the form$")
     public void submitForm() {
         searchPage = homePage.submitForm();
     }
 
-    @When("I choose non-stop flights only on the Search page")
+    @When("^I chose non-stop flights only$")
     public void chooseNonStopFlights() {
         searchPage.chooseNonStopFlights();
     }
 
-    @And("set duration to the quarter of max possible")
+    @And("^set Flight Leg duration to the quarter of max possible$")
     public void modifyDuration() {
         searchPage.modifyDuration(4, 3);
     }
 
-    @And("sort the list by cheapest")
+    @And("^sorted the list by cheapest$")
     public void sortByCheapest() {
         searchPage.sortByCheapest();
     }

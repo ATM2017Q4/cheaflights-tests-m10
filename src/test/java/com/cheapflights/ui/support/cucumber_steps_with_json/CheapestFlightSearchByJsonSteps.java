@@ -1,11 +1,13 @@
-package com.cheapflights.ui.feature;
+package com.cheapflights.ui.feature.with_json;
 
 import com.cheapflights.common.driver.AbstractWebDriver;
 import com.cheapflights.common.driver.DriverFactory;
+import com.cheapflights.ui.entities.TravelInfo;
 import com.cheapflights.ui.page.abstractpages.AbstractHomePage;
 import com.cheapflights.ui.page.abstractpages.AbstractSearchPage;
 import com.cheapflights.ui.page.factory.HomePageFactory;
 import com.cheapflights.ui.page.factory.SearchPageFactory;
+import com.google.gson.Gson;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -16,7 +18,7 @@ import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;
 
-public class CheapestFlightSearchSteps {
+public class CheapestFlightSearchByJsonSteps {
 
 
     private final String url = "https://cheapflights.com/";
@@ -43,32 +45,36 @@ public class CheapestFlightSearchSteps {
 
     }
 
-    @Given("^I have searched for all airports in (.*)$")
-    public void chooseOrigin(String origin) {
-        homePage.chooseOrigin(origin);
+    @Given("^I have filled in the form on the Home Page with the following values:$")
+    public void chooseOrigin(String json) {
+        TravelInfo travelInfo = new Gson().fromJson(json, TravelInfo.class);
+        homePage.chooseOrigin(travelInfo.getOrigin())
+                .chooseDestination(travelInfo.getDestination())
+                .chooseDates(travelInfo.getDepartureDates().getMonth(), Integer.toString(travelInfo.getDepartureDates().getDay()), Integer.toString(travelInfo.getReturnDates().getDay()))
+                .increaseNumberOfAdults(travelInfo.getNumberOfAdults());
     }
-
-    @And("^searched for all airports in (.*)$")
-    public void chooseDestination(String destination) {
-        homePage.chooseDestination(destination);
-    }
-
-    @And("^searched for (.*), (.*), (.*) in the date picker$")
-    public void chooseDates(String departureMonth, String departureDay, String returnDay) {
-        homePage.chooseDates(departureMonth, departureDay, returnDay);
-    }
-
-    @And("set number of adults to (.*)")
-    public void increaseNuberOfAdults(int numberOfAdults) {
-        homePage.increaseNumberOfAdults(numberOfAdults);
-    }
-
+//
+//    @And("^searched for all airports in (.*)$")
+//    public void chooseDestination(String destination) {
+//        homePage.chooseDestination(destination);
+//    }
+//
+//    @And("^searched for (.*), (.*), (.*) in the date picker$")
+//    public void chooseDates(String departureMonth, String departureDay, String returnDay) {
+//        homePage.chooseDates(departureMonth, departureDay, returnDay);
+//    }
+//
+//    @And("set number of adults to (.*)")
+//    public void increaseNuberOfAdults(int numberOfAdults) {
+//        homePage.increaseNumberOfAdults(numberOfAdults);
+//    }
+//
     @And("submitted the form")
     public void submitForm() {
         searchPage = homePage.submitForm();
     }
 
-    @When("I choose non-stop flights only")
+    @When("I choose non-stop flights only on the Search page")
     public void chooseNonStopFlights() {
         searchPage.chooseNonStopFlights();
     }
