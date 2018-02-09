@@ -1,4 +1,5 @@
 package com.cheapflights.ui.page.blocks;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -9,7 +10,7 @@ import java.util.logging.Logger;
 
 @Name("Sorting dropdown")
 @FindBy(xpath = "//ul[@class = 'dropdownList']")
-public class SortDropDownBlock extends HtmlElement{
+public class SortDropDownBlock extends HtmlElement {
 
     @FindBy(xpath = "//li[@data-title='Cheapest']")
     private WebElement cheapestFlights;

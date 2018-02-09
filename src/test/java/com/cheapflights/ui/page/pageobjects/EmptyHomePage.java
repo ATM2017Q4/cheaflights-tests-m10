@@ -1,8 +1,8 @@
 package com.cheapflights.ui.page.pageobjects;
 
 import com.cheapflights.ui.page.abstractpages.AbstractHomePage;
-import com.cheapflights.ui.utils.webdrivertools.VisibilityWaitDecorator;
-import com.cheapflights.ui.utils.webdrivertools.Wait;
+import com.cheapflights.ui.utils.webdrivertools.WebDriverTools;
+import com.cheapflights.ui.utils.webdrivertools.WebDriverToolsDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -45,7 +45,7 @@ public class EmptyHomePage extends AbstractHomePage {
         logger.info("Sending " + from + "as origin name");
         origin.sendKeys(from);
         logger.info("Waiting for the dropdown to appear");
-        new VisibilityWaitDecorator(new Wait(driver, options, 2, 1)).setUpWait();
+        new WebDriverToolsDecorator(new WebDriverTools(driver)).waitForVisibilityFluently(driver, options, 2, 1);
         logger.info("Choosing the origin and all airports");
         origin.sendKeys(Keys.ARROW_DOWN);
         origin.sendKeys(Keys.ENTER);
@@ -59,7 +59,7 @@ public class EmptyHomePage extends AbstractHomePage {
         logger.info("Sending " + to + "as destination name");
         destination.sendKeys(to);
         logger.info("Waiting for the dropdown to appear");
-        new VisibilityWaitDecorator(new Wait(driver, options, 2, 1)).setUpWait();
+        new WebDriverToolsDecorator(new WebDriverTools(driver)).waitForVisibilityFluently(driver, options, 2, 1);
         logger.info("Choosing the destination and all airports");
         destination.sendKeys(Keys.ARROW_DOWN);
         destination.sendKeys(Keys.ENTER);

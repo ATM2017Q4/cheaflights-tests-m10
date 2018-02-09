@@ -1,10 +1,11 @@
 package com.cheapflights.ui.page.blocks;
 
 import com.cheapflights.ui.page.abstractpages.AbstractSearchPage;
-import com.cheapflights.ui.utils.webdrivertools.AjaxContentWaitDecorator;
-import com.cheapflights.ui.utils.webdrivertools.Wait;
+import com.cheapflights.ui.utils.webdrivertools.WebDriverTools;
+import com.cheapflights.ui.utils.webdrivertools.WebDriverToolsDecorator;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +13,6 @@ import ru.yandex.qatools.htmlelements.annotations.Name;
 import ru.yandex.qatools.htmlelements.element.CheckBox;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -48,16 +48,18 @@ public class FiltersBlock extends HtmlElement {
 
     protected Logger logger = Logger.getLogger(this.getClass().getName());
 
+    private WebDriver driver = AbstractSearchPage.getDriver();
+
     public void chooseNonStopFlights() {
         logger.info("Waiting for the search results page to load");
-        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        new WebDriverToolsDecorator(new WebDriverTools(AbstractSearchPage.getDriver())).waitForJSandJQueryToLoad(driver);
         logger.info("Unchecking one stop checkbox");
         oneStop.click();
-        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        new WebDriverToolsDecorator(new WebDriverTools(AbstractSearchPage.getDriver())).waitForJSandJQueryToLoad(driver);
         logger.info("Unchecking two stops checkbox");
         twoStops.click();
         logger.info("Waiting for the page to update according to the chosen filters");
-        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
+        new WebDriverToolsDecorator(new WebDriverTools(AbstractSearchPage.getDriver())).waitForJSandJQueryToLoad(driver);
 
     }
 
@@ -75,13 +77,7 @@ public class FiltersBlock extends HtmlElement {
                 .build()
                 .perform();
         logger.info("Waiting for the page to update according to the chosen duration");
-        try {
-            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
-        }catch (org.openqa.selenium.TimeoutException e){
-            logger.log(Level.SEVERE, "The page has not been properly loaded");
-        }finally {
-            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
-        }
+        new WebDriverToolsDecorator(new WebDriverTools(AbstractSearchPage.getDriver())).waitForJSandJQueryToLoad(driver);
 
     }
 
