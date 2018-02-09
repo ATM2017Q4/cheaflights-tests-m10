@@ -17,8 +17,8 @@ public class PrefilledSearchFormBlock extends BaseSearchFormBlock {
     private WebDriver driver = AbstractHomePage.getDriver();
 
     @Name("Origin typeahead dropdown")
-    @FindBy(xpath = "//div[contains(@id, 'origin-smartbox-dropdown')]")
-    private WebElement originOptions;
+    @FindBy(xpath = "//div[contains(@id, 'origin-smartbox-dropdown')]//li[1]//b")
+    private WebElement originFirstOptions;
 
     @Name("Destination typeahead dropdown")
     @FindBy(xpath = "//div[contains(@id, 'destination-smartbox-dropdown')]")
@@ -50,13 +50,22 @@ public class PrefilledSearchFormBlock extends BaseSearchFormBlock {
     public void searchOrigin(String from) {
         logger.info("Clicking in the origin field and clearing it");
         origin.click();
-        origin.sendKeys(Keys.BACK_SPACE);
+        origin.clear();
         logger.info("Sending " + from + "as origin name");
         origin.sendKeys(from);
         logger.info("Waiting for the dropdown to appear");
-        new WebDriverToolsDecorator(new WebDriverTools(driver)).waitForVisibilityFluently(driver, originOptions, 5, 1);
-        logger.info("Choosing the origin and all airports");
+        new WebDriverToolsDecorator(new WebDriverTools(driver)).waitForVisibilityFluently(driver, originFirstOptions, 10, 1);
+        if (originFirstOptions.getText().toLowerCase().contains(from)) {
+            logger.info("Choosing the origin and all airports");
+        } else {
+            origin.clear();
+            logger.info("Sending " + from + "as origin name");
+            origin.sendKeys(from);
+            logger.info("Waiting for the dropdown to appear");
+            new WebDriverToolsDecorator(new WebDriverTools(driver)).waitForVisibilityFluently(driver, originFirstOptions, 10, 1);
+        }
         origin.sendKeys(Keys.ENTER);
+
     }
 
     @Override
