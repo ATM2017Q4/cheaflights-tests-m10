@@ -1,8 +1,9 @@
 Feature: Find cheapest flight
 
-  Users should be able to get the list of flights between two cities by entering the cities' names,
+  User should be able to get the list of flights between two cities by entering the cities' names,
   departure and return dates and choosing the number of adults.
-  Afterwards, user should be able to extract the cheapest and most convenient flight for them by applying filters and sorting by cheapest.
+  As a result, user should be able to filter the cheapest and most convenient flight for them
+  by applying filters and sorting by cheapest.
 
   Background:
     Given I am on the Home Page
