@@ -35,7 +35,7 @@ public class CheapestFlightSearchSteps {
         driver.manage().window().maximize();
     }
 
-    @Given("I am on the Home Page")
+    @Given("^I am on the Home Page$")
     public void openUrl() {
         driver.get(url);
         pageFactory = new HomePageFactory(driver);
@@ -79,7 +79,7 @@ public class CheapestFlightSearchSteps {
         searchPage.sortByCheapest();
     }
 
-    @Then("the cheapest flight costing less than (.*) is shown first in the list")
+    @Then("^the cheapest flight costing less than (\\d+) is shown first in the list$")
     public void getCheapest(int acceptablePrice) {
         Assert.assertTrue(SearchPageFactory.getCorrectPage(driver).getCheapestFlight() <= acceptablePrice);
     }

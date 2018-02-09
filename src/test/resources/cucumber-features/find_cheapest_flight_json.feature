@@ -5,10 +5,9 @@ Feature: Find cheapest flight
   Afterwards, user should be able to extract the cheapest and most convenient flight for them by applying filters and sorting by cheapest.
 
   Background:
-    Given I want to use Firefox browser
-    And I am on the Home Page
+    Given I am on the Home Page
 
-  Scenario Outline: Searching for the flights
+  Scenario: Searching for the flights
     Given I have filled in the form on the Home Page with the following values:
       """
     {
@@ -24,19 +23,13 @@ Feature: Find cheapest flight
     "month": "November",
     "year": 2018
     },
-    "numberOfAdults": 1,
-    "acceptablePrice": 200
-
+    "numberOfAdults": 1
     }
       """
-#    And submitted the form
-#    When I choose non-stop flights only on the Search page
-#    And set duration to the quarter of max possible
-#    And sort the list by cheapest
-#    Then the cheapest flight costing less than <acceptablePrice> is shown first in the list
 
-    Examples:
-      | acceptablePrice |
-      | 600             |
-      | 200             |
+    And submitted the form
+    When I chose non-stop flights only
+    And set Flight Leg duration to the quarter of max possible
+    And sorted the list by cheapest
+    Then the cheapest flight costing less than 200 is shown first in the list
 

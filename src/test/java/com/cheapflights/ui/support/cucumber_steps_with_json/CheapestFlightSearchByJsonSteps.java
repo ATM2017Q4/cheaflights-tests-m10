@@ -9,6 +9,7 @@ import com.cheapflights.ui.page.factory.HomePageFactory;
 import com.cheapflights.ui.page.factory.SearchPageFactory;
 import com.google.gson.Gson;
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -28,7 +29,7 @@ public class CheapestFlightSearchByJsonSteps {
     private HomePageFactory pageFactory;
 
 
-    @Given("I want to use Firefox browser")
+    @Before
     public void launchBrowser() {
         AbstractWebDriver instance = DriverFactory.getDriverFromFactory("firefox");
         driver = instance.getDriver();
@@ -37,7 +38,7 @@ public class CheapestFlightSearchByJsonSteps {
         driver.manage().window().maximize();
     }
 
-    @And("I am on the Home Page")
+    @Given("^I am on the Home Page$")
     public void openUrl() {
         driver.get(url);
         pageFactory = new HomePageFactory(driver);
@@ -53,43 +54,28 @@ public class CheapestFlightSearchByJsonSteps {
                 .chooseDates(travelInfo.getDepartureDates().getMonth(), Integer.toString(travelInfo.getDepartureDates().getDay()), Integer.toString(travelInfo.getReturnDates().getDay()))
                 .increaseNumberOfAdults(travelInfo.getNumberOfAdults());
     }
-//
-//    @And("^searched for all airports in (.*)$")
-//    public void chooseDestination(String destination) {
-//        homePage.chooseDestination(destination);
-//    }
-//
-//    @And("^searched for (.*), (.*), (.*) in the date picker$")
-//    public void chooseDates(String departureMonth, String departureDay, String returnDay) {
-//        homePage.chooseDates(departureMonth, departureDay, returnDay);
-//    }
-//
-//    @And("set number of adults to (.*)")
-//    public void increaseNuberOfAdults(int numberOfAdults) {
-//        homePage.increaseNumberOfAdults(numberOfAdults);
-//    }
-//
-    @And("submitted the form")
+
+    @And("^submitted the form$")
     public void submitForm() {
         searchPage = homePage.submitForm();
     }
 
-    @When("I choose non-stop flights only on the Search page")
+    @When("^I chose non-stop flights only$")
     public void chooseNonStopFlights() {
         searchPage.chooseNonStopFlights();
     }
 
-    @And("set duration to the quarter of max possible")
+    @And("^set Flight Leg duration to the quarter of max possible$")
     public void modifyDuration() {
         searchPage.modifyDuration(4, 3);
     }
 
-    @And("sort the list by cheapest")
+    @And("^sorted the list by cheapest$")
     public void sortByCheapest() {
         searchPage.sortByCheapest();
     }
 
-    @Then("the cheapest flight costing less than (.*) is shown first in the list")
+    @Then("^the cheapest flight costing less than (\\d+) is shown first in the list$")
     public void getCheapest(int acceptablePrice) {
         Assert.assertTrue(SearchPageFactory.getCorrectPage(driver).getCheapestFlight() <= acceptablePrice);
     }
