@@ -1,4 +1,4 @@
-package com.cheapflights.ui.feature.with_json;
+package com.cheapflights.ui.support.cucumber_steps_with_json;
 
 import com.cheapflights.common.driver.AbstractWebDriver;
 import com.cheapflights.common.driver.DriverFactory;

@@ -1,22 +1,21 @@
 Feature: Find cheapest flight
 
-  Users should be able to get the list of flights between two cities by entering the cities' names,
+  User should be able to get the list of flights between two cities by entering the cities' names,
   departure and return dates and choosing the number of adults.
-  Afterwards, user should be able to extract the cheapest and most convenient flight for them by applying filters and sorting by cheapest.
+  As a result, user should be able to filter the cheapest and most convenient flight for them
+  by applying filters and sorting by cheapest.
 
   Background:
-    Given I want to use Firefox browser
-    And I am on the Home Page
+    Given I am on the Home Page
 
-  Scenario Outline: Searching for the flights
-    Given I have searched for all airports in <origin>
-    And searched for all airports in <destination>
-    And searched for <departureMonth>, <departureDay>, <returnDay> in the date picker
-    And set number of adults to <numberOfAdults>
+  Scenario Outline: Searching for the cheapest flight
+    Given I want to travel from <origin> to <destination>
+    And chose it to last from <departureMonth> <departureDay> till <returnDay> of the same month
+    And want to find the ticket for <numberOfAdults> adults
     And submitted the form
-    When I choose non-stop flights only
-    And set duration to the quarter of max possible
-    And sort the list by cheapest
+    When I chose non-stop flights only
+    And set Flight Leg duration to the quarter of max possible
+    And sorted the list by cheapest
     Then the cheapest flight costing less than <acceptablePrice> is shown first in the list
 
     Examples:

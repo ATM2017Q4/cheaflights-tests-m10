@@ -17,7 +17,7 @@ public class AjaxContentWaitDecorator extends WaitDecorator{
     @Override
     public void setUpWait() {
         super.setUpWait();
-        this.createWait().withTimeout(30, TimeUnit.SECONDS).until(waitForJSandJQueryToLoad());
+        this.createWait().withTimeout(40, TimeUnit.SECONDS).until(waitForJSandJQueryToLoad());
 
     }
 

@@ -1,4 +1,4 @@
-package com.cheapflights.ui.support.cucumber_steps_without_json;
+package com.cheapflights.ui.tests.cucumbertests;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.AbstractTestNGCucumberTests;

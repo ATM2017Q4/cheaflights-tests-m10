@@ -21,11 +21,11 @@ import java.util.logging.Logger;
 public class FiltersBlock extends HtmlElement {
 
     @Name("One stop checkbox")
-    @FindBy(name = "2")
+    @FindBy(xpath = "//label[@data-name='2']")
     private CheckBox twoStops;
 
     @Name("Two stops checkbox")
-    @FindBy(name = "1")
+    @FindBy(xpath = "//label[@data-name='1']")
     private CheckBox oneStop;
 
     @Name("Max flight duration sider")
@@ -50,30 +50,14 @@ public class FiltersBlock extends HtmlElement {
 
     public void chooseNonStopFlights() {
         logger.info("Waiting for the search results page to load");
-        try {
-            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
-        }catch (org.openqa.selenium.TimeoutException e){
-            logger.log(Level.SEVERE, "The page has not been properly loaded");
-        }
+        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
         logger.info("Unchecking one stop checkbox");
         oneStop.click();
-        try {
-            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
-        }catch (org.openqa.selenium.TimeoutException e){
-            logger.log(Level.SEVERE, "The page has not been properly loaded");
-        }finally {
-            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
-        }
+        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
         logger.info("Unchecking two stops checkbox");
         twoStops.click();
         logger.info("Waiting for the page to update according to the chosen filters");
-        try {
-            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
-        }catch (org.openqa.selenium.TimeoutException e){
-            logger.log(Level.SEVERE, "The page has not been properly loaded");
-        }finally {
-            new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
-        }
+        new AjaxContentWaitDecorator(new Wait(AbstractSearchPage.getDriver())).setUpWait();
 
     }
 

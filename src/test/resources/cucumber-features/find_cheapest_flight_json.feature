@@ -29,11 +29,11 @@ Feature: Find cheapest flight
 
     }
       """
-    And submitted the form
-    When I choose non-stop flights only on the Search page
-    And set duration to the quarter of max possible
-    And sort the list by cheapest
-    Then the cheapest flight costing less than <acceptablePrice> is shown first in the list
+#    And submitted the form
+#    When I choose non-stop flights only on the Search page
+#    And set duration to the quarter of max possible
+#    And sort the list by cheapest
+#    Then the cheapest flight costing less than <acceptablePrice> is shown first in the list
 
     Examples:
       | acceptablePrice |

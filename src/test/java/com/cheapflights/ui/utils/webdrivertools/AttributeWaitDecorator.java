@@ -1,10 +1,11 @@
 package com.cheapflights.ui.utils.webdrivertools;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+
+import java.util.concurrent.TimeUnit;
 
 public class AttributeWaitDecorator extends WaitDecorator{
 
@@ -15,7 +16,7 @@ public class AttributeWaitDecorator extends WaitDecorator{
     @Override
     public void setUpWait() {
         super.setUpWait();
-        this.createWait().until(waitForAttribute(wait.getBy(), wait.getAttribute(), wait.getValue()));
+        this.createWait().withTimeout(10, TimeUnit.SECONDS).until(waitForAttribute(wait.getBy(), wait.getAttribute(), wait.getValue()));
 
     }
 
